@@ -28,11 +28,13 @@ public class DinamicaMemoria {
                 break;
 
             case 2:
-                System.out.println("2. Mejor ajuste");
+                MejorAjuste mejorAjuste = new MejorAjuste();
+                mejorAjuste.mejorajuste();
                 break;
 
             case 3:
-                System.out.println("3. Peor ajuste");
+                PeorAjuste peorAjuste = new PeorAjuste();
+                peorAjuste.peorajuste();
                 break;
         }
 

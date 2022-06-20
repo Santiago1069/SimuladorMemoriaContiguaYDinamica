@@ -1,5 +1,7 @@
 package simuladormemoria;
 
+import simuladormemoria.excepciones.MemoriaInsuficienteException;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,21 +21,48 @@ public class Memoria {
     }
 
 
-    public void guardarProceso(int tamanioProceso)  {
-       if(obtenerSumaTodaLaMemoria() > tamanioProceso){
-           // insertar valor en la memoria
-       } else {
-           System.out.println("El tamanio del proceso es muy grande para la memoria actual");
-       }
+    public void guardarProceso(int tamanioProceso) throws MemoriaInsuficienteException {
+
+        verificarCapacidadMemoria(tamanioProceso);
+        if(segmentoDisponible(tamanioProceso)) {
+            for (int i = 0; i < memoria.size(); i++) {
+                if(memoria.get(i) >= tamanioProceso) {
+                    System.out.println("memoria asignada: " + tamanioProceso );
+                    System.out.println("posicion: " + i );
+                    System.out.println("fragmentacion interna: " + (memoria.get(i) - tamanioProceso) );
+                    System.out.println("valor encontrado: " + memoria.get(i));
+                    memoria.set(i, 0);
+                    break;
+                }
+            }
+        }
     }
 
-    private int obtenerSumaTodaLaMemoria() {
+    private boolean segmentoDisponible(int tamanioProceso) {
+        boolean esSegmentoDisponible = false;
+        for (Integer segmento : memoria) {
+            if(segmento >= tamanioProceso) {
+                 esSegmentoDisponible = true;
+            }
+        }
 
-        int suma = 0;
-        for(int i=0; i >= suma; i++){
-            suma = suma + i;
+        return esSegmentoDisponible;
+    }
+
+    private void verificarCapacidadMemoria(int tamanioProceso) throws MemoriaInsuficienteException {
+        if(obtenerSumaTodaLaMemoria() < tamanioProceso) {
+            throw new MemoriaInsuficienteException("La memoria no tiene suficiente espacio para este proceso" +
+                    "-----------------------------------------------------------------------------");
+
         }
     }
 
 
+    public int obtenerSumaTodaLaMemoria() {
+        int suma = 0;
+        for(Integer tamanio : memoria){
+            suma = suma + tamanio;
+        }
+        return suma;
+    }
 }
