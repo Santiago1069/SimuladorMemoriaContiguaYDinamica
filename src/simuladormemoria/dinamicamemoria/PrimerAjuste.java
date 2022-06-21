@@ -37,7 +37,7 @@ public class PrimerAjuste {
         System.out.println("-----------------------------------------------------------------------------");
 
         try {
-            memoria.guardarProceso(tamanio);
+            memoria.guardarProcesoPrimerAjuste(tamanio);
         } catch (MemoriaInsuficienteException e) {
             System.out.println("La memoria actual no tiene la capacidad de almacenar el proceso");
             System.out.println("-----------------------------------------------------------------------------");
